@@ -3,6 +3,8 @@ This repository hosts the codebase for the following work:
 Karanam, S., Gou, M., Wu, Z., Rates-Borras, A., Camps, O., & Radke, R. J. (2016). 
 [A Systematic Evaluation and Benchmark for Person Re-Identification: Features, Metrics, and Datasets.](https://arxiv.org/abs/1605.09653) arXiv preprint arXiv:1605.09653.
 
+Tested on Windows Server 2012 with MATLAB 2016b
+
 ### Quick Start
 * Clone this repository
 * Run a quick example in run_experiment_benchmark.m
@@ -10,6 +12,8 @@ Karanam, S., Gou, M., Wu, Z., Rates-Borras, A., Camps, O., & Radke, R. J. (2016)
 
 ### Run other experiments
 * Download supported dataset, unzip it and put it under the folder ./Data 
+* Download corresponding partition file and put it under the folder ./TrainTestSplits
+* Run corresponding prepare_DATANAME.m inside the folder ./Data
 * Change the parameters in run_experiment_benchmark.m 
 
 ### Check List for supported/tested feature
@@ -43,8 +47,11 @@ Karanam, S., Gou, M., Wu, Z., Rates-Borras, A., Camps, O., & Radke, R. J. (2016)
 * ahisd
 
 ### Check List for supported/tested dataset
-* [VIPeR](http://users.soe.ucsc.edu/~manduchi/VIPeR.v1.0.zip)
-* CAVIAR (WHOS feature only)
+* [VIPeR](http://users.soe.ucsc.edu/~manduchi/VIPeR.v1.0.zip) Parition included in repo
+* [Airport](http://www.northeastern.edu/alert/transitioning-technology/alert-datasets/alert-airport-re-identification-dataset/) Partition comes with dataset
+* [DukeMTMC4ReID](http://robustsystems.coe.neu.edu/sites/robustsystems.coe.neu.edu/files/systems/dataset/DukeMTMC4ReID.zip) Partition comes with dataset
+* [Market1501](http://www.liangzheng.org/Project/project_reid.html) [Partition](http://robustsystems.coe.neu.edu/sites/robustsystems.coe.neu.edu/files/systems/code/reid_benchmark/partition/Partition_market.mat)
+* CAVIAR (WHOS feature only) Parition included in repo
 
 ### Reference
 * Karanam, S., Gou, M., Wu, Z., Rates-Borras, A., Camps, O., & Radke, R. J. (2016). 

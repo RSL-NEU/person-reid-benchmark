@@ -131,7 +131,7 @@ for s=1:num_split
     % metric learning
     if(~strcmp(mopts.name,'l2'))
         metric=learnProjectionMatrix(X,trainCamID,trainID,idx_pos_pair,...
-                                        idx_neg_pair,mopts);
+                                        idx_neg_pair,mopts,dopts);
         time_train(s) = metric.options.time_train;
     else
         metric.options=[];
@@ -157,7 +157,13 @@ for s=1:num_split
     % test feature mapping
     [ testFeatProj ] = testProjection( testFeat, X, metric, mopts );
     
-    for pr = 1:size(idx_probe,1) % loop over probe cameras  
+    % loop over probe cameras  
+    if strcmp(dopts.name,'DukeMTMC')
+        pr_s = 57; % Only evaluate fix-one-camera protocol for DukeMTMC
+    else
+        pr_s = 1;
+    end    
+    for pr = 1:size(idx_probe,1)
         dis = [];
         if(strcmp(dopts.evalType,'clustering') || strcmp(dopts.evalType,'all')) % multi shot ranking
             if(~strcmp(dopts.name,'DukeMTMC'))

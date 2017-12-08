@@ -2,11 +2,12 @@
 
 % X - NxF matrix of N feature vectors: each row is a feature vector of
 % dimension F
-% camID-1xN array indicating the camera ID of each feature vector in X
-% personID- 1xN array indicating the person ID of each feature vector in X
-% method - a structure with the following fields:
-% - method.name: name of the metric learning method, 'pcca','kissme','mfa','lfda'
-% - method.d: dimensionality of the learned feature space
+% camID - 1xN array indicating the camera ID of each feature vector in X
+% personID - 1xN array indicating the person ID of each feature vector in X
+% idx_pos_pair - pre-computed positive pairs
+% idx_neg_pair - pre-computed negtive pairs
+% mopts - options for metric learning
+% dopts - options for dataset
 
 function metric=learnProjectionMatrix(X,camID,personID,idx_pos_pair,idx_neg_pair,mopts,dopts)
 

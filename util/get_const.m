@@ -21,6 +21,9 @@ switch const
     case 'file_partition'
         if isempty(dopts.pair)
             output = sprintf('./TrainTestSplits/Partition_%s.mat', dopts.name);
+            if strcmp(dopts.name,'DukeMTMC')
+                output = sprintf('./TrainTestSplits/Partition_%s.mat', 'DukeReID');
+            end
         else
             output = sprintf('./TrainTestSplits/Partition_%s_%s.mat', dopts.name,dopts.pair);
         end

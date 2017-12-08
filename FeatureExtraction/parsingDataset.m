@@ -3,7 +3,7 @@ function [ imgs,camID,personID ] = parsingDataset( dopts,partition )
 %   read all images from the dataset and parse the IDs
     
 fprintf('Start parsing dataset...');
-switch dopts.name
+switch lower(dopts.name)
     case 'viper'
         [srcdir,cam_sets,num_cam] = folderList(fullfile(dopts.datafolder, 'VIPeR'));
         camID = [];
@@ -23,8 +23,31 @@ switch dopts.name
                 end
             end
         end        
-    case 'DukeMTMC'        
-        load(fullfile(dopts.datafolder,'DukeMTMC/DukeMTMC_reid_images.mat'))
+    case 'dukemtmc'        
+        folder = fullfile(dopts.datafolder, 'DukeMTMC4ReID','ReID');
+        [~,caminfo,] = folderList(folder);
+        imgs = {};
+        personID = [];
+        camID = [];
+        impath = {};
+        cnt = 1;
+        for c = 1:numel(caminfo)
+            fprintf('Parsing camera %d...\n',c);
+            camID_tmp = str2num(caminfo{c}(end));
+            [~,persons,~] = folderList(fullfile(folder,caminfo{c}));
+            for p = 1:numel(persons)
+                iminfo = dir(fullfile(folder,caminfo{c},persons{p},'*.jpg'));
+                for i = 1:numel(iminfo)
+                    impath_tmp = fullfile(folder,caminfo{c},persons{p},iminfo(i).name);
+                    tmpim = imread(impath_tmp);
+                    imgs{cnt} = tmpim;
+                    personID(cnt) = str2num(persons{p});
+                    camID(cnt) = camID_tmp;
+                    impath{cnt} = impath_tmp;
+                    cnt = cnt + 1;
+                end
+            end
+        end
         imgs = cellfun(@(x) imresize(x,[128 64]),imgs,'uni',0);        
     case 'cuhk01'
         folder = fullfile(dopts.datafolder,'campus');
@@ -107,7 +130,7 @@ switch dopts.name
         end        
     case 'market'
         % parsing training part 
-        [srcdir,cam_sets,num_cam] = folderList(fullfile(dopts.datafolder,'Market1501/dataset/train'));
+        [srcdir,cam_sets,num_cam] = folderList(fullfile(dopts.datafolder,'Market1501/train'));
         camID = [];
         personID = [];
         imgs = {};        
@@ -128,7 +151,7 @@ switch dopts.name
         
         num_train = cnt-1;
         % parsing testing part - probe
-        [srcdir,cam_sets,num_cam] = folderList(fullfile(dopts.datafolder,'Market1501/dataset/test/probe'));
+        [srcdir,cam_sets,num_cam] = folderList(fullfile(dopts.datafolder,'Market1501/test/probe'));
         for c = 1:num_cam
             [~,person_sets,num_person] = folderList(fullfile(srcdir,cam_sets{c}));
             for p = 1:num_person
@@ -145,7 +168,7 @@ switch dopts.name
         num_probe = cnt - 1 - num_train;
         
         % parsing testing part - gallery
-        [srcdir,cam_sets,num_cam] = folderList(fullfile(dopts.datafolder,'Market1501/dataset/test/gallery'));
+        [srcdir,cam_sets,num_cam] = folderList(fullfile(dopts.datafolder,'Market1501/test/gallery'));
         for c = 1:num_cam
             [~,person_sets,num_person] = folderList(fullfile(srcdir,cam_sets{c}));
             for p = 1:num_person
@@ -365,7 +388,25 @@ switch dopts.name
         end
         
     case 'airport'
-        load(fullfile(dopts.datafolder,'Airport_offline/Airport_offline.mat'));
+        fid = fopen(fullfile(dopts.datafolder, 'AirportALERT_image','filepath.txt'));
+        cnt = 1;
+        tline = fgetl(fid);
+        tline = strrep(tline,'\','/');
+        while ischar(tline)
+            imgs{cnt} = imread(fullfile(dopts.datafolder, 'AirportALERT_image',tline));
+            cnt = cnt + 1;
+            tline = fgetl(fid);
+            tline = strrep(tline,'\','/');
+        end
+        fclose(fid);
+        fid = fopen(fullfile(dopts.datafolder, 'AirportALERT_image','camID.txt'));
+        camID = fscanf(fid,'%d');
+        fclose(fid);
+        fid = fopen(fullfile(dopts.datafolder, 'AirportALERT_image','personID.txt'));
+        personID = fscanf(fid,'%d');        
+        fclose(fid);
+        camID = camID';
+        personID = personID';
     case 'prid'
         [srcdir,cam_sets,num_cam] = folderList(fullfile(dopts.datafolder,'prid_2011/multi_shot_DVR/'));
         camID = [];

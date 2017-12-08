@@ -34,7 +34,7 @@ switch lower(method.featureType)
         sigma = (imsz/4).^2;
         K_no_iso_gaus = exp(-(kx./sigma(2))-(ky./sigma(1)));
         fprintf('Begin to extract WHOS feature');
-        for i = 1:numel(img)
+        parfor i = 1:numel(img)
             if mod(i,round(numel(img)/10))==0
                 fprintf('.');
             end               
