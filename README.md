@@ -1,4 +1,52 @@
-This is a repository for the code associated with paper 
-```
-Karanam, S., Gou, M., Wu, Z., Rates-Borras, A., Camps, O., & Radke, R. J. (2016). A Systematic Evaluation and Benchmark for Person Re-Identification: Features, Metrics, and Datasets. arXiv preprint arXiv:1605.09653.
-```
+# Person Re-identification Benchmark
+This repository hosts the codebase for the following work:
+Karanam, S., Gou, M., Wu, Z., Rates-Borras, A., Camps, O., & Radke, R. J. (2016). 
+[A Systematic Evaluation and Benchmark for Person Re-Identification: Features, Metrics, and Datasets.](https://arxiv.org/abs/1605.09653) arXiv preprint arXiv:1605.09653.
+
+### Quick Start
+* Clone this repository
+* Run a quick example in run_experiment_benchmark.m
+* Read the results for VIPeR dataset with WHOS feature and XQDA
+
+### Run other experiments
+* Download supported dataset, unzip it and put it under the folder ./Data 
+* Change the parameters in run_experiment_benchmark.m 
+
+### Check List for supported/tested feature
+* HistLBP
+* WHOS
+* gBiCov
+* LDFV
+* ColorTexture\ELF
+* LOMO (Windows)
+* GOG (Windows)
+
+### Check List for supported/tested metric learning
+* FDA
+* LFDA
+* kLFDA-linear/chi2/chi2-rbf/exp
+* XQDA
+* MFA
+* kMFA-linear/chi2/chi2-rbf/exp
+* NFST
+* KISSME
+* PCCA-linear/chi2/chi2-rbf/exp
+* rPCCA-linear/chi2/chi2-rbf/exp
+* kPCCA-linear/chi2/chi2-rbf/exp
+* PRDC
+* SVMML
+* kCCA
+
+### Check List for supported/tested multi-shot ranking method
+* rnp
+* srid
+* ahisd
+
+### Check List for supported/tested dataset
+* [VIPeR](http://users.soe.ucsc.edu/~manduchi/VIPeR.v1.0.zip)
+* CAVIAR (WHOS feature only)
+
+### Reference
+* Karanam, S., Gou, M., Wu, Z., Rates-Borras, A., Camps, O., & Radke, R. J. (2016). 
+[A Systematic Evaluation and Benchmark for Person Re-Identification: Features, Metrics, and Datasets.](https://arxiv.org/abs/1605.09653) arXiv preprint arXiv:1605.09653.
+* Please also cite the work appropriately for each used feature/metric learning/ranking/dataset 
