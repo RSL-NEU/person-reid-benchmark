@@ -13,7 +13,7 @@ Tested on Windows Server 2012 with MATLAB 2016b
 ### Run other experiments
 * Download supported dataset, unzip it and put it under the folder ./Data 
 * Download corresponding partition file and put it under the folder ./TrainTestSplits
-* Run corresponding prepare_DATANAME.m inside the folder ./Data
+* Run corresponding prepare_DATANAME.m inside the folder ./Data (if avaliable)
 * Change the parameters in run_experiment_benchmark.m 
 
 ### Check List for supported/tested feature

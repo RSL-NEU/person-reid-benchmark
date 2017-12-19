@@ -9,7 +9,6 @@ run('./3rdParty/vlfeat-0.9.20/toolbox/vl_setup.m')
 addpath(genpath('./FeatureExtraction'))
 addpath(genpath('./MetricLearning'))
 addpath(genpath('./util'))
-addpath(genpath('./NeuralNet'))
 addpath(genpath('./TrainTestSplits'))
 addpath(genpath('./Evaluation'))
 
