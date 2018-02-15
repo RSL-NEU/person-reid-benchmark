@@ -1,7 +1,7 @@
 # Person Re-identification Benchmark
 This repository hosts the codebase for the following work:
 Karanam, S., Gou, M., Wu, Z., Rates-Borras, A., Camps, O., & Radke, R. J. (2016). 
-[A Systematic Evaluation and Benchmark for Person Re-Identification: Features, Metrics, and Datasets.](https://arxiv.org/abs/1605.09653) arXiv preprint arXiv:1605.09653.
+[A Systematic Evaluation and Benchmark for Person Re-Identification: Features, Metrics, and Datasets.](https://arxiv.org/abs/1605.09653) IEEE Transactions on Pattern Analysis and Machine Intelligence, accepted February 2018.
 
 Tested on Windows Server 2012 with MATLAB 2016b
 
@@ -55,5 +55,5 @@ Tested on Windows Server 2012 with MATLAB 2016b
 
 ### Reference
 * Karanam, S., Gou, M., Wu, Z., Rates-Borras, A., Camps, O., & Radke, R. J. (2016). 
-[A Systematic Evaluation and Benchmark for Person Re-Identification: Features, Metrics, and Datasets.](https://arxiv.org/abs/1605.09653) arXiv preprint arXiv:1605.09653.
+[A Systematic Evaluation and Benchmark for Person Re-Identification: Features, Metrics, and Datasets.](https://arxiv.org/abs/1605.09653) IEEE Transactions on Pattern Analysis and Machine Intelligence, accepted February 2018.
 * Please also cite the work appropriately for each used feature/metric learning/ranking/dataset 
