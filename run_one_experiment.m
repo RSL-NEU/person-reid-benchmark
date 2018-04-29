@@ -230,6 +230,7 @@ elseif strcmp(dopts.name,'DukeMTMC')
     rank = mean(rank,1)*100;
 elseif strcmp(dopts.name,'market') 
     metric.mAP = mAP*100;
+    rank = mean(rank,1)*100;
 else
     rank = mean(rank,1)*100;
 end

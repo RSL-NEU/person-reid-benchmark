@@ -28,8 +28,7 @@ else
             tmpR = tmpRank(p,:);
             junk = sortCamID(p,:)==probeCamID(p) & ...
                 IDsort(p,:)==probeID(p); % remove within camera match
-            tmpR(junk)=[];
-            Res_match{s,pr}(p,junk) = 0;
+            tmpR(junk)=[];            
             firstOcc(p) = min(find(tmpR));
             AP(p) = compute_AP(find(tmpR),1:numel(tmpR));
         end
