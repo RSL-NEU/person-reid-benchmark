@@ -58,7 +58,11 @@ end
 % load/extract features
 if exist(fopts.featureFile,'file') ~= 0
     % load pre-computed feature
-    load(fopts.featureFile);
+    feat_precompute = load(fopts.featureFile);
+    features = feat_precompute.features;
+    personID = feat_precompute.personID;
+    camID = feat_precompute.camID;
+    clear feat_precompute
 else
     % parse all images 
     [ imgs,camID,personID ] = parsingDataset( dopts,partition );
@@ -100,7 +104,14 @@ for s=1:num_split
     idx_gallery = partition(s).idx_gallery;
     idx_pos_pair = partition(s).ix_pos_pair;
     idx_neg_pair = partition(s).ix_neg_pair; 
-    
+    % PCA 
+    if fopts.doPCA ~= 0
+        disp('PCA applied!');
+        [U,mu,vars] = pca(features(idx_train,:)');
+        [Yhat,Xhat,avsq] = pcaApply(features',U,mu,fopts.pcadim);
+        features = Yhat';
+        oriFeat = features;
+    end
     if iscell(oriFeat) % special care for LDFV features
         features = oriFeat{s};
 %         if(size(dopts.evalType,1)~=0)
