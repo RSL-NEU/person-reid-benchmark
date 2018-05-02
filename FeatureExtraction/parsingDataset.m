@@ -22,7 +22,86 @@ switch lower(dopts.name)
                     cnt = cnt + 1;
                 end
             end
-        end        
+        end           
+    case 'msmt17'
+        tmp_path = pwd;
+        imsz = [128,64]; % resize image
+        cd(fullfile(dopts.datafolder, 'MSMT17_V1'));
+        camID = zeros(1,numel(partition.idx_train));
+        personID = zeros(1,numel(partition.idx_train));
+        imgs = cell(1,numel(partition.idx_train));
+        cnt = 1;
+        % training
+        fid = fopen('list_train.txt');
+        tmpline = fgetl(fid);
+        cnt = 1;
+
+        while 1
+            if tmpline == -1 
+                break;
+            end
+            disp(tmpline)
+            personID(cnt) = str2double(tmpline(1:4));
+            camID(cnt) = str2double(tmpline(15:16));
+            filename = strsplit(tmpline);
+            imgs{cnt} = imresize(imread(fullfile('train',filename{1})),imsz);
+            cnt = cnt + 1;   
+            tmpline = fgetl(fid);
+        end
+        fclose(fid);
+
+        % validating
+        fid = fopen('list_val.txt');
+        tmpline = fgetl(fid);        
+        while 1
+            if tmpline == -1 
+                break;
+            end
+            disp(tmpline)
+            personID(cnt) = str2double(tmpline(1:4));
+            camID(cnt) = str2double(tmpline(15:16));
+            filename = strsplit(tmpline);
+            imgs{cnt} = imresize(imread(fullfile('train',filename{1})),imsz);
+            cnt = cnt + 1;   
+            tmpline = fgetl(fid);
+        end
+        fclose(fid);
+
+        % query
+        ID_offset = max(personID)+1; % make sure the ID is unique for both train/test
+        fid = fopen('list_query.txt');
+        tmpline = fgetl(fid);
+        while 1
+            if tmpline == -1 
+                break;
+            end
+            disp(tmpline)
+            personID(cnt) = str2double(tmpline(1:4)) + ID_offset;
+            camID(cnt) = str2double(tmpline(15:16));
+            filename = strsplit(tmpline);
+            imgs{cnt} = imresize(imread(fullfile('test',filename{1})),imsz);
+            cnt = cnt + 1;   
+            tmpline = fgetl(fid);
+        end
+        fclose(fid);
+
+        % gallery
+        fid = fopen('list_gallery.txt');
+        tmpline = fgetl(fid);
+        while 1
+            if tmpline == -1 
+                break;
+            end
+            disp(tmpline)
+            personID(cnt) = str2double(tmpline(1:4)) + ID_offset;
+            camID(cnt) = str2double(tmpline(15:16));
+            filename = strsplit(tmpline);
+            imgs{cnt} = imresize(imread(fullfile('test',filename{1})),imsz);
+            cnt = cnt + 1;   
+            tmpline = fgetl(fid);
+        end
+        fclose(fid);
+        cd(tmp_path);
     case 'dukemtmc'        
         folder = fullfile(dopts.datafolder, 'DukeMTMC4ReID','ReID');
         [~,caminfo,] = folderList(folder);

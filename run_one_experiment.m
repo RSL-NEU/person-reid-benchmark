@@ -71,7 +71,7 @@ else
     else
         [features,fopts] = ComputeFeatures(imgs,fopts);
     end     
-    save(fopts.featureFile, 'features','camID','personID','fopts');
+    save(fopts.featureFile, 'features','camID','personID','fopts','-v7.3');
 end
 
 % clustering for multi-shot

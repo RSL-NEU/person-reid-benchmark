@@ -237,6 +237,7 @@ switch lower(method.featureType)
             x=computeFeaturesCNN(img1,single(meanImg),net);
         end
 end
+x = single(x);
 warning on
 end
 

@@ -3,6 +3,40 @@ function result = evaluateDis(dis, idx_gallery, idx_probe, probeID, galleryID, .
 % Evaluate computed distance with ground truth
 % default: sorted by ascend
 % Written by Mengran Gou @ 2017
+
+if strcmp(dopts.name,'msmt17') % special care for MSMT17 dataset
+    if(strcmp(mopts.method,'ranksvm')) 
+        dis = -dis; % reverse the distance for rankSVM
+    end
+    firstOcc = [];
+    AP = [];
+    galleryCamID = testCamID(idx_gallery);
+    probeCamID = testCamID(idx_probe);
+    resRank = zeros(size(dis));
+%     result.ResMatch = tmpRank;
+    h_wait = waitbar(0,'Evaluating MSMT17 dataset...');
+    for p = 1:size(dis,1)        
+        waitbar(p/size(dis,1),h_wait,'Evaluating MSMT17 dataset...');
+        tmpdis = dis(p,:);
+        [~,idxSort] = sort(tmpdis);
+        IDsort = galleryID(idxSort);
+        sortCamID = galleryCamID(idxSort);
+        tmpR = IDsort == probeID(p);
+        resRank(p,:) = tmpR;
+        
+        junk = sortCamID==probeCamID(p) & ...
+            IDsort==probeID(p); % remove within camera match
+        tmpR(junk)=[];
+        firstOcc(p) = min(find(tmpR));
+        AP(p) = compute_AP(find(tmpR),1:numel(tmpR));
+    end
+    tmpRank = hist(firstOcc,1:numel(galleryID));
+    result.ResMatch = resRank;
+    result.mAP = mean(AP);
+    result.Rank = cumsum(tmpRank)./sum(idx_probe);
+    close(h_wait)
+    return;
+end
 if(strcmp(ropts.rankType,'isr'))
     tmpRank=dis';
 else
@@ -29,7 +63,6 @@ else
             junk = sortCamID(p,:)==probeCamID(p) & ...
                 IDsort(p,:)==probeID(p); % remove within camera match
             tmpR(junk)=[];
-            Res_match{s,pr}(p,junk) = 0;
             firstOcc(p) = min(find(tmpR));
             AP(p) = compute_AP(find(tmpR),1:numel(tmpR));
         end
