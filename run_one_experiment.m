@@ -22,7 +22,8 @@ if strfind(dopts.name, 'cuhk_')
     end
 end
 if strcmp(dopts.name, 'market') || strcmp(dopts.name, 'airport') ... 
-    || strcmp(dopts.name, 'hda') ||  strcmp(dopts.name, 'DukeMTMC')
+    || strcmp(dopts.name, 'hda') ||  strcmp(dopts.name, 'DukeMTMC') || ...
+    strcmp(dopts.name, 'mtmc17')
     num_split = 1;
 end
 %% Feature extraction/loading

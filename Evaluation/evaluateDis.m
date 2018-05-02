@@ -8,7 +8,7 @@ if strcmp(dopts.name,'msmt17') % special care for MSMT17 dataset
     if(strcmp(mopts.method,'ranksvm')) 
         dis = -dis; % reverse the distance for rankSVM
     end
-    firstOcc = [];
+    firstOcc = zeros(1,size(dis,1);
     AP = [];
     galleryCamID = testCamID(idx_gallery);
     probeCamID = testCamID(idx_probe);
@@ -32,6 +32,7 @@ if strcmp(dopts.name,'msmt17') % special care for MSMT17 dataset
     end
     tmpRank = hist(firstOcc,1:numel(galleryID));
     result.ResMatch = resRank;
+    result.firstOcc = firstOcc;
     result.mAP = mean(AP);
     result.Rank = cumsum(tmpRank)./sum(idx_probe);
     close(h_wait)
@@ -68,6 +69,7 @@ else
         end
         tmpRank = hist(firstOcc,1:numel(galleryID));
         result.mAP = mean(AP);
+        result.firstOcc = firstOcc;
     elseif  strcmp(dopts.name,'airport') || strcmp(dopts.name,'DukeMTMC')
         firstOcc = [];
         AP = [];
@@ -80,6 +82,7 @@ else
         result.mAP = mean(AP);
         result.szGal = numel(galleryID);
         result.szProb = numel(probeID);
+        result.firstOcc = firstOcc;
     elseif strcmp(dopts.name,'hda')
         firstOcc = [];
         AP = [];
@@ -89,6 +92,7 @@ else
             AP(p) = compute_AP(find(tmpR),1:numel(tmpR));
         end
         tmpRank = hist(firstOcc,1:numel(galleryID));
+        result.firstOcc = firstOcc;
         result.mAP = mean(AP);
     else
         tmpRank = sum(tmpRank,1);
