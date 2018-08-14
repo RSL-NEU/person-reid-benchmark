@@ -8,7 +8,7 @@ if strcmp(dopts.name,'msmt17') % special care for MSMT17 dataset
     if(strcmp(mopts.method,'ranksvm')) 
         dis = -dis; % reverse the distance for rankSVM
     end
-    firstOcc = zeros(1,size(dis,1);
+    firstOcc = zeros(1,size(dis,1));
     AP = [];
     galleryCamID = testCamID(idx_gallery);
     probeCamID = testCamID(idx_probe);

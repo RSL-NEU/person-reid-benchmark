@@ -105,14 +105,7 @@ for s=1:num_split
     idx_gallery = partition(s).idx_gallery;
     idx_pos_pair = partition(s).ix_pos_pair;
     idx_neg_pair = partition(s).ix_neg_pair; 
-    % PCA 
-    if fopts.doPCA ~= 0
-        disp('PCA applied!');
-        [U,mu,vars] = pca(features(idx_train,:)');
-        [Yhat,Xhat,avsq] = pcaApply(features',U,mu,fopts.pcadim);
-        features = Yhat';
-        oriFeat = features;
-    end
+
     if iscell(oriFeat) % special care for LDFV features
         features = oriFeat{s};
 %         if(size(dopts.evalType,1)~=0)
@@ -120,6 +113,14 @@ for s=1:num_split
 %         end
     else 
         features = oriFeat;
+    end
+    
+        % PCA 
+    if fopts.doPCA ~= 0
+        disp('PCA applied!');
+        [U,mu,vars] = pca(features(idx_train,:)');
+        [Yhat,Xhat,avsq] = pcaApply(features',U,mu,fopts.pcadim);
+        features = Yhat';
     end
 %% --------------------- training ------------------------
     if((strcmp(dopts.evalType,'clustering') || strcmp(dopts.evalType,'all')) && ~strcmp(dopts.name,'DukeMTMC'))
